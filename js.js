@@ -1,9 +1,11 @@
+let imageMeme;
+
 const generate = document.getElementById('genMeme');
 generate.addEventListener('click', function() {
     const topText = document.getElementById('topText').value;
     const bottomText = document.getElementById('bottomText').value;
     const imageInput = document.getElementById('imageInput');
-    const imageMeme = document.getElementById('meme');
+    imageMeme = document.getElementById('meme'); // Assign imageMeme using let instead of const
     const colorInput = document.getElementById('color');
     const fontInput = document.getElementById('font');
 
@@ -11,10 +13,6 @@ generate.addEventListener('click', function() {
 
     if (file) {
         const reader = new FileReader();
-
-        // ...
-
-        // ...
 
         reader.onload = function (e) {
             imageMeme.src = e.target.result;
@@ -27,33 +25,33 @@ generate.addEventListener('click', function() {
 
                 context.drawImage(imageMeme, 0, 0, canvas.width, canvas.height);
 
-                // Create a separate canvas for text rendering
+
                 const textCanvas = document.createElement('canvas');
                 const textContext = textCanvas.getContext('2d');
-                textCanvas.width = canvas.width; // or adjust as needed
-                textCanvas.height = canvas.height; // or adjust as needed
+                textCanvas.width = canvas.width;
+                textCanvas.height = canvas.height;
 
-                // Get values from inputs
+
                 const selectedColor = colorInput.value;
                 const selectedFont = fontInput.value;
 
                 textContext.font = `3em ${selectedFont}`;
                 textContext.fillStyle = selectedColor;
                 textContext.strokeStyle = 'black';
-                textContext.lineWidth = 2; // Adjust this value for the size of the filled text stroke
+                textContext.lineWidth = 2;
                 textContext.textAlign = 'center';
 
-                // Function to split text into lines
-                function splitTextIntoLines(text) {
+
+                function splitTextIntoLines(text, context, maxWidth) {
                     const words = text.split(' ');
                     const lines = [];
                     let currentLine = '';
 
                     for (let i = 0; i < words.length; i++) {
                         const testLine = currentLine + (currentLine ? ' ' : '') + words[i];
-                        const testWidth = textContext.measureText(testLine).width;
+                        const testWidth = context.measureText(testLine).width;
 
-                        if (testWidth <= textCanvas.width) {
+                        if (testWidth <= maxWidth) {
                             currentLine = testLine;
                         } else {
                             lines.push(currentLine);
@@ -65,28 +63,24 @@ generate.addEventListener('click', function() {
                     return lines;
                 }
 
-                // Calculate text position to center it within the canvas
                 const textX = textCanvas.width / 2;
                 const textYTop = 40; // Adjust as needed
                 const textYBottom = textCanvas.height - 60; // Adjust as needed
 
-                // Split and render TOP text
-                const linesTop = splitTextIntoLines(topText);
+                const linesTop = splitTextIntoLines(topText, textContext, textCanvas.width);
                 linesTop.forEach((line, index) => {
                     textContext.fillText(line, textX, textYTop + (index * 40));
-                    textContext.lineWidth = 1; // Adjust this value for the size of the stroke for the word "stroke"
+                    textContext.lineWidth = 1; // Adjust this value for the size of the stroke
                     textContext.strokeText(line, textX, textYTop + (index * 40));
                 });
 
-                // Split and render BOTTOM text
-                const linesBottom = splitTextIntoLines(bottomText);
+                const linesBottom = splitTextIntoLines(bottomText, textContext, textCanvas.width);
                 linesBottom.forEach((line, index) => {
                     textContext.fillText(line, textX, textYBottom + (index * 40));
-                    textContext.lineWidth = 1; // Adjust this value for the size of the stroke for the word "stroke"
+                    textContext.lineWidth = 1; // Adjust this value for the size of the stroke
                     textContext.strokeText(line, textX, textYBottom + (index * 40));
                 });
 
-                // Combine the image canvas with the text canvas
                 context.drawImage(textCanvas, 0, 0, canvas.width, canvas.height);
 
                 imageMeme.src = canvas.toDataURL('image/jpeg');
@@ -99,32 +93,16 @@ generate.addEventListener('click', function() {
     }
 });
 
+document.getElementById('download').addEventListener('click', function () {
+    if (imageMeme && imageMeme.src) {
 
-// Select the download button
-const downloadButton = document.getElementById('downloadButton');
-
-// Add a click event listener to the download button
-downloadButton.addEventListener('click', function () {
-    // Convert the canvas content to a data URL
-    const dataURL = canvas.toDataURL('image/jpeg');
-
-    // Create a temporary anchor element
-    const downloadLink = document.createElement('a');
-
-    // Set the download link's href to the data URL
-    downloadLink.href = dataURL;
-
-    // Set the download attribute with the desired file name
-    downloadLink.download = 'meme.jpg';
-
-    // Append the download link to the document
-    document.body.appendChild(downloadLink);
-
-    // Trigger a click on the download link to start the download
-    downloadLink.click();
-
-    // Remove the download link
-    document.body.removeChild(downloadLink);
+        const link = document.createElement('a');
+        link.href = imageMeme.src;
+        link.download = 'meme.jpg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        console.error('imageMeme or its src property is undefined. Make sure to generate the meme first.');
+    }
 });
-
-// ...
