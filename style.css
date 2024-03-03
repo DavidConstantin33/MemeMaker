@@ -43,7 +43,7 @@ button {
 }
 
 .container {
-    margin-top: 2em;
+    margin: 2em 15em 0 15em;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -86,4 +86,27 @@ button {
     background-color: white;
     text-align: center;
     bottom: 0;
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 500px) {
+    .container {
+        width: auto;
+        margin: 2em 0 0 0;
+        flex-direction: column;
+    }
+    .container img {
+        width: 300px;
+        height: 300px;
+    }
+    .options,
+    .textInput,
+    .colorFontInput,
+    .downUp {
+        text-align: center;
+    }
+    .downUp {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5em;
+    }
 }
