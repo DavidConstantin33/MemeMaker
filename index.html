@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="head">
+    <h1>Meme Maker!</h1>
+</div>
+
+<div class="container">
+    <div class="image">
+    <img id="meme" src="meme1.jpg" alt="meme">
+    </div>
+    <div class="options">
+
+    <div class="textInput">
+        <p>Top Text:</p>
+        <input type="text" id="topText">
+        <p>Bottom text:</p>
+        <input type="text" id="bottomText">
+    </div>
+
+    <div class="colorFontInput">
+        <p>Text Color and Font:</p>
+        <input type="color" id="color" value="#000000">
+        <select id="font">
+            <option value="Anton">Clasic</option>
+            <option value="Times New Roman">Times New Roman</option>
+        </select>
+    </div>
+
+    <div class="downUp">
+        <input type="file" id="imageInput" accept="image/*">
+        <button id="genMeme">Generate</button>
+        <button id="download">Download</button>
+    </div>
+    </div>
+</div>
+
+<div class="foot">
+    <p>Constantin David @2024</p>
+</div>
+<script src="js.js"></script>
+</body>
+</html>
