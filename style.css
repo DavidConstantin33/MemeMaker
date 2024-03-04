@@ -8,6 +8,11 @@ body {
     font-size: 1em;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 input, select {
     margin: 5px;
     padding: 5px;
@@ -20,6 +25,11 @@ button {
     padding: 5px;
     background-color: white;
     font-family: "Roboto", sans-serif;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
 }
 
 .anton-regular {
@@ -80,6 +90,10 @@ button {
 }
 
 .foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
     padding: 10px;
     position: fixed;
     width: 100%;
